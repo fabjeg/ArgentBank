@@ -60,6 +60,8 @@ body {
   text-decoration: underline;
 }
 .style-button {
+  display: flex;
+  gap: 10px;
   border: none;
   background-color: white;
 }
@@ -67,6 +69,9 @@ body {
   font-size: 24px;
   color: #00bc77;
 }
+
+/* .container-header {
+} */
 
 .main-nav-logo {
   display: flex;

@@ -1,15 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Footer, Header } from "./components/index";
+import { Footer, Header, CompteHeader } from "./components/index";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { SignUp, Home } from "./pages";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "../src/reducers/index";
+import { SignUp, Home, Compte } from "../src/pages/";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <Router>
-      <Header />
+const store = configureStore({
+  reducer: rootReducer,
+  devTools: true,
+});
+
+function App() {
+  const location = useLocation();
+
+  return (
+    <>
+      {location.pathname === "/compte" ? <CompteHeader /> : <Header />}
       <Routes>
         <Route
           path="/"
@@ -19,9 +33,24 @@ root.render(
           path="/signup"
           element={<SignUp />}
         />
+        <Route
+          path="/compte"
+          element={<Compte />}
+        />
       </Routes>
       <Footer />
-    </Router>
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
   </React.StrictMode>
 );
 
