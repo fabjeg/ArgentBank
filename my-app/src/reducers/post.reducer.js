@@ -1,4 +1,4 @@
-import { GET_LOGIN, LOGOUT } from "../actions/fetch.action";
+import { GET_LOGIN, LOGOUT } from "../actions/index";
 import { initialStates } from "./initialStates";
 
 export default function postReducer(state = initialStates.auth, action) {
@@ -14,6 +14,7 @@ export default function postReducer(state = initialStates.auth, action) {
         ...state,
         accessToken: null,
       };
+
     default:
       return state;
   }

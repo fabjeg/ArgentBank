@@ -1,3 +1,3 @@
 export function Compte() {
-  return <div>vous etre connecté</div>;
+  return <div></div>;
 }

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import Logo from "../img/argentBankLogo.png";
+import Logo from "../img/argentBank2.png";
 import "../styles/main.css";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../actions/fetch.action";
@@ -8,7 +8,7 @@ export function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.post.accessToken);
-  const userName = useSelector((state) => state.post.user?.name);
+  const userName = useSelector((state) => state.get.userName);
 
   const handleClick = () => {
     navigate("/");
@@ -22,7 +22,7 @@ export function Header() {
   return (
     <nav className="main-nav">
       <img
-        className=" main-nav-logo main-nav-logo-image"
+        className="main-nav-logo main-nav-logo-image"
         src={Logo}
         alt="Argent Bank Logo"
         onClick={handleClick}
@@ -34,7 +34,10 @@ export function Header() {
             onClick={handleSignOut}
             className="style-button"
           >
-            <span>{userName}</span>
+            <div className="user-name">
+              <span>{userName}</span>
+              <span className="fa-solid fa-circle-user"></span>
+            </div>
             <span className="fa-solid fa-gear" />
             <span className="fa-solid fa-power-off" />
           </button>
