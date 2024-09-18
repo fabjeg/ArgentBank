@@ -22,7 +22,6 @@ export const login = (username, password) => {
       });
       const data = await response.json();
       console.log(data);
-      localStorage.setItem("accessToken", data.body.token);
 
       dispatch({ type: GET_LOGIN, payload: data.body.token });
     } catch (error) {

@@ -1,6 +1,6 @@
 export const initialStates = {
   auth: {
-    accessToken: undefined,
+    accessToken: null,
   },
   user: {
     userName: "",
