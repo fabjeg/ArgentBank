@@ -12,7 +12,7 @@ export function Form() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const accessToken = useSelector((state) => state.post.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken);
 
   const handleSubmit = (event) => {
     event.preventDefault();

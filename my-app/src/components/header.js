@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import Logo from "../img/argentBank2.png";
+import Logo2 from "../img/argentBank2.png";
+import Logo from "../img/argentBankLogo.png";
 import "../styles/main.css";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../actions/fetch.action";
@@ -7,8 +8,8 @@ import { logout } from "../actions/fetch.action";
 export function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const accessToken = useSelector((state) => state.post.accessToken);
-  const userName = useSelector((state) => state.get.userName);
+  const accessToken = useSelector((state) => state.auth.accessToken);
+  const userName = useSelector((state) => state.user.userName);
 
   const handleClick = () => {
     navigate("/");
@@ -23,7 +24,7 @@ export function Header() {
     <nav className="main-nav">
       <img
         className="main-nav-logo main-nav-logo-image"
-        src={Logo}
+        src={accessToken ? Logo2 : Logo}
         alt="Argent Bank Logo"
         onClick={handleClick}
       />

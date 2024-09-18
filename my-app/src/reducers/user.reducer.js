@@ -1,7 +1,7 @@
 import { GET_USER, UPDATE_USER } from "../actions/index";
 import { initialStates } from "./initialStates";
 
-export default function getReducer(state = initialStates.auth, action) {
+export default function userReducer(state = initialStates.user, action) {
   switch (action.type) {
     case GET_USER:
       return {

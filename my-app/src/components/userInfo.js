@@ -5,11 +5,13 @@ import "../styles/main.css";
 
 export function UserInfo() {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.get);
+  const userInfo = useSelector((state) => state.user);
+  const state = useSelector((state) => state);
   const [username, setUsername] = useState(userInfo.userName || "");
   const [initialUsername, setInitialUsername] = useState(
     userInfo.userName || ""
   );
+  console.log("mon log", state);
 
   useEffect(() => {
     setUsername(userInfo.userName);
