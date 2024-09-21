@@ -342,3 +342,34 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
+/* ---------------------- */
+
+.container-account {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 1px solid;
+  border-radius: 10px;
+  margin-inline: 10%;
+  background-color: #494c4b;
+  color: white;
+  padding-inline: 2%;
+  margin-bottom: 10px;
+}
+.account-info {
+  display: flex;
+  flex-direction: column;
+}
+.account-pay {
+  font-size: 30px;
+  margin: 0;
+}
+.container-chevron {
+  display: flex;
+  align-items: center;
+}
+.fa-chevron-right {
+  color: white;
+  font-size: 80px;
+  margin-top: 30px;
+}

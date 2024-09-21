@@ -1,3 +1,12 @@
+import { BankAccount, UserInfo } from "../components";
+
 export function Compte() {
-  return <div></div>;
+  return (
+    <div>
+      <UserInfo />
+      <BankAccount />
+      <BankAccount />
+      <BankAccount />
+    </div>
+  );
 }

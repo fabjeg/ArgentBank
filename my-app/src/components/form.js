@@ -1,4 +1,3 @@
-// src/components/Form.js
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,16 +8,20 @@ export function Form() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const accessToken = useSelector((state) => state.auth.accessToken);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submitted with:", { username, password, rememberMe });
-
-    dispatch(login(username, password));
+    setError(null); // Réinitialiser les erreurs
+    try {
+      await dispatch(login(username, password));
+    } catch (err) {
+      setError("Échec de la connexion. Veuillez vérifier vos identifiants.");
+    }
   };
 
   useEffect(() => {
@@ -35,6 +38,7 @@ export function Form() {
           aria-hidden="true"
         ></span>
         <h1>Sign In</h1>
+        {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
             <label htmlFor="username">Username</label>

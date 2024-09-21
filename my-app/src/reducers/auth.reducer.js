@@ -13,7 +13,6 @@ export default function authReducer(state = initialStates.auth, action) {
         ...state,
         accessToken: null,
       };
-
     default:
       return state;
   }

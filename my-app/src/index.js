@@ -1,13 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Footer, Header, CompteHeader } from "./components/index";
+import { Footer, Header } from "./components/index"; // Retirez CompteHeader
 import reportWebVitals from "./reportWebVitals";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "../src/reducers/index";
@@ -17,7 +12,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-  key: "auth",
+  key: "root",
   storage,
 };
 
@@ -25,7 +20,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -37,31 +31,6 @@ const store = configureStore({
 
 const persistor = persistStore(store);
 
-function App() {
-  const location = useLocation();
-
-  return (
-    <>
-      {location.pathname === "/compte" ? <CompteHeader /> : <Header />}
-      <Routes>
-        <Route
-          path="/"
-          element={<Home />}
-        />
-        <Route
-          path="/signup"
-          element={<SignUp />}
-        />
-        <Route
-          path="/compte"
-          element={<Compte />}
-        />
-      </Routes>
-      <Footer />
-    </>
-  );
-}
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -71,7 +40,22 @@ root.render(
         persistor={persistor}
       >
         <Router>
-          <App />
+          <Header />
+          <Routes>
+            <Route
+              path="/"
+              element={<Home />}
+            />
+            <Route
+              path="/signup"
+              element={<SignUp />}
+            />
+            <Route
+              path="/compte"
+              element={<Compte />}
+            />
+          </Routes>
+          <Footer />
         </Router>
       </PersistGate>
     </Provider>

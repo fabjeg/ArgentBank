@@ -7,4 +7,7 @@ export const initialStates = {
     firstName: "",
     lastName: "",
   },
+  account: {
+    accounts: [],
+  },
 };

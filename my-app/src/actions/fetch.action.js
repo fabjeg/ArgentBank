@@ -1,5 +1,6 @@
 export const GET_LOGIN = "GET_LOGIN";
 export const LOGOUT = "LOGOUT";
+export const ACCOUNT_USER = "ACCOUNT_USER";
 
 export const logout = () => {
   return (dispatch) => {
@@ -21,7 +22,6 @@ export const login = (username, password) => {
         }),
       });
       const data = await response.json();
-      console.log(data);
 
       dispatch({ type: GET_LOGIN, payload: data.body.token });
     } catch (error) {

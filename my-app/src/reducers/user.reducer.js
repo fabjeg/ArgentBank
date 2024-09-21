@@ -4,7 +4,6 @@ import { initialStates } from "./initialStates";
 export default function userReducer(state = initialStates.user, action) {
   switch (action.type) {
     case GET_USER:
-      console.log("log", action.payload);
       return {
         ...state,
         userName: action.payload.userName,

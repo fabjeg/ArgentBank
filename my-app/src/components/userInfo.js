@@ -5,17 +5,15 @@ import "../styles/main.css";
 
 export function UserInfo() {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.user);
-  const state = useSelector((state) => state);
+  const userInfo = useSelector((state) => state.user || {});
   const [username, setUsername] = useState(userInfo.userName || "");
   const [initialUsername, setInitialUsername] = useState(
     userInfo.userName || ""
   );
-  console.log("mon log", state);
 
   useEffect(() => {
-    setUsername(userInfo.userName);
-    setInitialUsername(userInfo.userName);
+    setUsername(userInfo.userName || "");
+    setInitialUsername(userInfo.userName || "");
   }, [userInfo]);
 
   useEffect(() => {
@@ -49,7 +47,7 @@ export function UserInfo() {
           <input
             className="input-form-user"
             type="text"
-            value={username}
+            value={username || ""}
             onChange={handleUsernameChange}
           />
         </label>
