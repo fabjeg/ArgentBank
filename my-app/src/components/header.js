@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import Logo2 from "../img/argentBank2.png";
-import Logo from "../img/argentBankLogo.png";
+import Logo2 from "../asset/argentBank2.png";
+import Logo from "../asset/argentBankLogo.png";
 import "../styles/main.css";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../actions/fetch.action";

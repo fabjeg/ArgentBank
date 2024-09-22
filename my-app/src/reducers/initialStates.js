@@ -10,4 +10,11 @@ export const initialStates = {
   account: {
     accounts: [],
   },
+  collapse: {
+    collapse: {},
+  },
+  category: {
+    items: [],
+    selectCategory: "",
+  },
 };

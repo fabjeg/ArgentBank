@@ -1,6 +1,8 @@
 export const GET_USER = "GET_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const ACCOUNT_USER = "ACCOUNT_USER";
+export const CHOOSE_CATEGORY = "CHOOSE_CATEGORY";
+export const SELECT_CATEGORY_ITEM = "SELECT_CATEGORY_ITEM";
 
 export const getUser = () => {
   return async (dispatch, getState) => {
@@ -70,3 +72,39 @@ export const accountUser = () => async (dispatch, getState) => {
     console.error("Erreur:", error.message);
   }
 };
+
+export const selectCategory = () => async (dispatch, getState) => {
+  try {
+    const token = getState().auth.accessToken;
+
+    const response = await fetch("http://localhost:3001/api/v1/CATEGORY", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      console.error("Response not OK:", response);
+      const errorDetails = await response.json();
+      throw new Error(
+        errorDetails.message || "Erreur lors de la récupération des catégories"
+      );
+    }
+    const datacategory = await response.json();
+
+    dispatch({
+      type: CHOOSE_CATEGORY,
+      payload: datacategory.body.category,
+    });
+  } catch (error) {
+    console.error("Erreur:", error.message);
+  }
+};
+
+export function selectCategoryItem(category) {
+  return {
+    type: SELECT_CATEGORY_ITEM,
+    payload: category,
+  };
+}

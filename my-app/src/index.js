@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "../src/reducers/index";
-import { SignUp, Home, Compte } from "../src/pages/";
+import { SignUp, Home, Account, BankAccountDetail } from "../src/pages/";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -51,8 +51,12 @@ root.render(
               element={<SignUp />}
             />
             <Route
-              path="/compte"
-              element={<Compte />}
+              path="/Account"
+              element={<Account />}
+            />
+            <Route
+              path="/BankAccountDetails"
+              element={<BankAccountDetail />}
             />
           </Routes>
           <Footer />

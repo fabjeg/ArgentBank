@@ -1,5 +1,6 @@
 import { SignUp } from "./signUp";
 import { Home } from "./home";
-import { Compte } from "./compte";
+import { Account } from "./account";
+import { BankAccountDetail } from "./bankAccountDetails";
 
-export { SignUp, Home, Compte };
+export { SignUp, Home, Account, BankAccountDetail };

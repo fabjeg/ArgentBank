@@ -1,7 +1,7 @@
 import { ACCOUNT_USER } from "../actions/index";
 import { initialStates } from "./initialStates";
 
-const accountReducer = (state = initialStates.account, action) => {
+export default function accountReducer(state = initialStates.account, action) {
   switch (action.type) {
     case ACCOUNT_USER:
       return {
@@ -11,6 +11,4 @@ const accountReducer = (state = initialStates.account, action) => {
     default:
       return state;
   }
-};
-
-export default accountReducer;
+}

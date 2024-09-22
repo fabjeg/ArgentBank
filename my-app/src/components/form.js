@@ -26,7 +26,7 @@ export function Form() {
 
   useEffect(() => {
     if (accessToken) {
-      navigate("/compte");
+      navigate("/Account");
     }
   }, [accessToken, navigate]);
 

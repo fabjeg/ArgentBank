@@ -1,6 +1,6 @@
 import { BankAccount, UserInfo } from "../components";
 
-export function Compte() {
+export function Account() {
   return (
     <div>
       <UserInfo />
