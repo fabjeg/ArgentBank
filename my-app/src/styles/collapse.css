@@ -1,0 +1,120 @@
+.container-page-collapse {
+  margin-bottom: 10px;
+}
+.collapse-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  border: none;
+  background-color: #00bc77;
+  color: white;
+  font-size: 15px;
+  padding-inline: 3%;
+  margin-top: 10px;
+}
+.collapse-button-open {
+  border-radius: 10px 10px 0 0;
+}
+
+.container-button {
+  margin-inline: 10%;
+}
+.container {
+  margin-inline: 10%;
+  padding-inline: 2%;
+}
+.container-p {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 17px;
+}
+.chevron {
+  color: white;
+  margin-top: 1%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.chevron.rotate {
+  transform: rotate(180deg);
+}
+
+.toggle {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  text-align: left;
+  padding: 5px 0 5px 10px;
+}
+
+.toggle label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.container-input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  border-radius: 4px;
+  color: white;
+  background-color: transparent;
+  flex: 1;
+  margin-right: 10px;
+  font-size: 17px;
+}
+
+.fa-pencil {
+  color: white;
+  font-size: 15px;
+}
+.toggle label p {
+  width: 100%;
+}
+.pencil {
+  color: transparent;
+}
+
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 500px;
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    max-height: 500px;
+    opacity: 1;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+  }
+}
+.container-toggle {
+  margin-inline: 10%;
+  background-color: #00bc77;
+  display: flex;
+  justify-content: flex-start;
+  border-radius: 0 0 10px 10px;
+  padding: 10px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.container-toggle.open {
+  animation: slideDown 0.5s forwards ease-out;
+}
+
+.container-toggle:not(.open) {
+  animation: slideUp 0.5s forwards ease-out;
+}

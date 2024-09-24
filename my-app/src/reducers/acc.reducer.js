@@ -1,4 +1,4 @@
-import { ACCOUNT_USER } from "../actions/index";
+import { ACCOUNT_USER, RESET_STATE } from "../actions/index";
 import { initialStates } from "./initialStates";
 
 export default function accountReducer(state = initialStates.account, action) {
@@ -8,6 +8,8 @@ export default function accountReducer(state = initialStates.account, action) {
         ...state,
         ...action.payload,
       };
+    case RESET_STATE:
+      return initialStates.account;
     default:
       return state;
   }

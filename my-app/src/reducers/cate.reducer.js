@@ -1,4 +1,8 @@
-import { CHOOSE_CATEGORY, SELECT_CATEGORY_ITEM } from "../actions/index";
+import {
+  CHOOSE_CATEGORY,
+  SELECT_CATEGORY_ITEM,
+  RESET_STATE,
+} from "../actions/index";
 import { initialStates } from "./initialStates";
 
 export default function categoryReducer(
@@ -16,6 +20,8 @@ export default function categoryReducer(
         ...state,
         selectCategory: action.payload,
       };
+    case RESET_STATE:
+      return initialStates.category;
     default:
       return state;
   }

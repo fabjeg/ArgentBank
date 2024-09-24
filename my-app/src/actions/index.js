@@ -6,6 +6,7 @@ import { ACCOUNT_USER } from "./get.action";
 import { TOGGLE_COLLAPSE } from "./toggle.action";
 import { CHOOSE_CATEGORY } from "./get.action";
 import { SELECT_CATEGORY_ITEM } from "./get.action";
+import { RESET_STATE } from "./fetch.action";
 
 export {
   GET_LOGIN,
@@ -16,4 +17,5 @@ export {
   TOGGLE_COLLAPSE,
   CHOOSE_CATEGORY,
   SELECT_CATEGORY_ITEM,
+  RESET_STATE,
 };

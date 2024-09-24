@@ -1,5 +1,6 @@
 export const GET_LOGIN = "GET_LOGIN";
 export const LOGOUT = "LOGOUT";
+export const RESET_STATE = "RESET_STATE";
 export const ACCOUNT_USER = "ACCOUNT_USER";
 
 export const logout = () => {
@@ -7,6 +8,9 @@ export const logout = () => {
     dispatch({ type: LOGOUT });
   };
 };
+export const resetState = () => ({
+  type: RESET_STATE,
+});
 
 export const login = (username, password) => {
   return async (dispatch) => {

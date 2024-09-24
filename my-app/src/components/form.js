@@ -16,7 +16,7 @@ export function Form() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(null); // Réinitialiser les erreurs
+    setError(null);
     try {
       await dispatch(login(username, password));
     } catch (err) {

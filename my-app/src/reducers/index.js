@@ -9,6 +9,6 @@ export default combineReducers({
   user: userReducer,
   auth: authReducer,
   acc: accountReducer,
-  toggle: toggleReducer,
+  collapse: toggleReducer,
   categ: categoryReducer,
 });

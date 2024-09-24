@@ -3,7 +3,7 @@ import Logo2 from "../asset/argentBank2.png";
 import Logo from "../asset/argentBankLogo.png";
 import "../styles/main.css";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../actions/fetch.action";
+import { logout, resetState } from "../actions/fetch.action";
 
 export function Header() {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ export function Header() {
 
   const handleSignOut = () => {
     dispatch(logout());
+    dispatch(resetState());
     navigate("/signup");
   };
 
