@@ -5,8 +5,6 @@ export function Account() {
     <div>
       <UserInfo />
       <BankAccount />
-      <BankAccount />
-      <BankAccount />
     </div>
   );
 }

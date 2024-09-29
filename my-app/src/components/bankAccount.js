@@ -1,50 +1,92 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { accountUser } from "../actions/get.action";
-import { selectAccountInfo } from "../components/Selector";
-import { useNavigate, useLocation } from "react-router-dom";
+import { getAccounts } from "../actions/get.action";
+import { useNavigate } from "react-router-dom";
 
 export function BankAccount() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const accountInfo = useSelector((state) => {
-    return selectAccountInfo(state);
-  });
+  const accounts = useSelector((state) => state.acc?.accounts?.accounts);
 
   useEffect(() => {
-    dispatch(accountUser());
+    dispatch(getAccounts());
   }, [dispatch]);
 
-  const handleClick = () => {
-    if (location.pathname === "/BankAccountDetails") {
-      navigate("/Account");
-    } else {
-      navigate("/BankAccountDetails");
-    }
+  const handleClick = (id) => {
+    navigate(`/BankAccountDetails/${id}`);
   };
-
-  const isDetailPage = location.pathname === "/BankAccountDetails";
-
+  if (!accounts || accounts.length === 0) {
+    return <div>Aucun compte disponible</div>;
+  }
   return (
-    <div className="container-account">
-      <div className="container-info">
-        <p>
-          {accountInfo.accountTitle} ({accountInfo.accountNumber})
-        </p>
-        <p className="account-pay">{accountInfo.accountPay}</p>
-        <p>{accountInfo.availableBalance}</p>
-      </div>
-      <div
-        className="container-chevron"
-        onClick={handleClick}
-      >
-        <span
-          className={
-            isDetailPage ? "fa-solid fa-xmark" : "fa-solid fa-chevron-right"
-          }
-        ></span>
+    <div>
+      <div className="account-windows">
+        {/* Compte 1 */}
+        <div className="account-window">
+          <div className="account-info">
+            <p>
+              Argent Bank (
+              {accounts[0]?.account1?.accountDetails?.accountNumber})
+            </p>
+            <p className="text-account">
+              $ {accounts[0]?.account1?.accountDetails?.accountBalance}
+            </p>
+            <p>
+              {accounts[0]?.account1?.transactions?.length} Available Balance
+            </p>
+          </div>
+          <div
+            className="container-chevron"
+            onClick={() => handleClick("account1")}
+          >
+            <span className={"fa-solid fa-chevron-right"}></span>
+          </div>
+        </div>
+
+        {/* Compte 2 */}
+        <div className="account-window">
+          <div className="account-info">
+            <p>
+              Argent Bank (
+              {accounts[0]?.account2?.accountDetails?.accountNumber})
+            </p>
+            <p className="text-account">
+              $ {accounts[0]?.account2?.accountDetails?.accountBalance}
+            </p>
+            <p>
+              {accounts[0]?.account2?.transactions?.length} Available Balance
+            </p>
+          </div>
+          <div
+            className="container-chevron"
+            onClick={() => handleClick("account2")}
+          >
+            <span className={"fa-solid fa-chevron-right"}></span>
+          </div>
+        </div>
+
+        {/* Compte 3 */}
+        <div className="account-window">
+          <div className="account-info">
+            <p>
+              Argent Bank (
+              {accounts[0]?.account3?.accountDetails?.accountNumber})
+            </p>
+            <p className="text-account">
+              $ {accounts[0]?.account3?.accountDetails?.accountBalance}
+            </p>
+            <p>
+              {accounts[0]?.account3?.transactions?.length} Available Balance
+            </p>
+          </div>
+          <div
+            className="container-chevron"
+            onClick={() => handleClick("account3")}
+          >
+            <span className={"fa-solid fa-chevron-right"}></span>
+          </div>
+        </div>
       </div>
     </div>
   );

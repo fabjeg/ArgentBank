@@ -3,12 +3,10 @@ import userReducer from "./user.reducer";
 import authReducer from "./auth.reducer";
 import accountReducer from "./acc.reducer";
 import toggleReducer from "./toggle.reducer";
-import categoryReducer from "./cate.reducer";
 
 export default combineReducers({
   user: userReducer,
   auth: authReducer,
   acc: accountReducer,
   collapse: toggleReducer,
-  categ: categoryReducer,
 });

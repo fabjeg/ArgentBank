@@ -9,7 +9,7 @@
   border: none;
   background-color: #00bc77;
   color: white;
-  font-size: 15px;
+  font-size: 17px;
   padding-inline: 3%;
   margin-top: 10px;
 }
@@ -22,18 +22,23 @@
 }
 .container {
   margin-inline: 10%;
-  padding-inline: 2%;
+  padding-inline: 3%;
 }
 .container-p {
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   font-size: 17px;
+  gap: 20px;
+}
+.amount {
+  margin-left: 50px;
 }
 .chevron {
   color: white;
   margin-top: 1%;
   transition: transform 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .chevron.rotate {
@@ -60,10 +65,13 @@
   padding: 5px;
   border-radius: 4px;
   color: white;
-  background-color: transparent;
+  /* background-color: transparent; */
   flex: 1;
   margin-right: 10px;
   font-size: 17px;
+}
+.category {
+  margin-right: 5%;
 }
 
 .fa-pencil {
@@ -104,10 +112,7 @@
   display: flex;
   justify-content: flex-start;
   border-radius: 0 0 10px 10px;
-  padding: 10px;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
+  padding: 8px 0 5px 8px;
   transition: max-height 0.5s ease, opacity 0.5s ease;
 }
 

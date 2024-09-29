@@ -55,7 +55,7 @@ root.render(
               element={<Account />}
             />
             <Route
-              path="/BankAccountDetails"
+              path="/BankAccountDetails/:accountId"
               element={<BankAccountDetail />}
             />
           </Routes>

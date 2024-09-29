@@ -6,7 +6,7 @@ export default function accountReducer(state = initialStates.account, action) {
     case ACCOUNT_USER:
       return {
         ...state,
-        ...action.payload,
+        accounts: action.payload,
       };
     case RESET_STATE:
       return initialStates.account;

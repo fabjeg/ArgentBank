@@ -77,9 +77,6 @@ body {
   color: #00bc77;
 }
 
-/* .container-header {
-} */
-
 .main-nav-logo {
   display: flex;
   align-items: center;
@@ -344,24 +341,26 @@ body {
 }
 /* ---------------------- */
 
-.container-account {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  border: 1px solid;
-  border-radius: 10px;
-  margin-inline: 10%;
-  background-color: #494c4b;
-  color: white;
-  padding-inline: 2%;
-  margin-bottom: 10px;
-}
-.container-info {
+.account-info {
   display: flex;
   flex-direction: column;
   text-align: left;
 }
-
+.account-window {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #494c4b;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  margin-inline: 10%;
+}
+.text-account {
+  font-size: 35px;
+  margin: 0;
+}
 .account-pay {
   font-size: 30px;
   margin: 0;
@@ -374,9 +373,11 @@ body {
   color: white;
   font-size: 80px;
   margin-top: 30px;
+  cursor: pointer;
 }
 .fa-xmark {
   color: white;
   font-size: 80px;
   margin-top: 30px;
+  cursor: pointer;
 }
