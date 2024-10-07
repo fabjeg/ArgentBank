@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 export function BankAccountDetail() {
   const { accountId } = useParams();
   const navigate = useNavigate();
-  const accounts = useSelector((state) => state.acc?.accounts?.accounts);
+  const accounts = useSelector((state) => state.acc?.accounts);
   const account = accounts[0]?.[accountId];
 
   const handleClick = () => {
@@ -16,7 +16,7 @@ export function BankAccountDetail() {
     <div>
       {account ? (
         <>
-          <div className="account-window">
+          <div className="account-window entries-anim">
             <div className="account-info">
               <p>Argent Bank ({account?.accountDetails?.accountNumber})</p>
               <p className="text-account">
@@ -26,7 +26,7 @@ export function BankAccountDetail() {
             </div>
             <div
               className="container-chevron"
-              onClick={() => handleClick("account1")}
+              onClick={handleClick}
             >
               <span className={"fa-solid fa-xmark"}></span>
             </div>
@@ -40,14 +40,19 @@ export function BankAccountDetail() {
               <p></p>
             </div>
           </div>
-          <div className="container-page-collapse">
-            {account.transactions?.map((transaction, index) => (
-              <Collapse
-                key={index}
-                id={`collapse${index + 1}`}
-                transaction={transaction}
-              />
-            ))}
+          <div className="container-page-collapse callapse-anim">
+            {account.transactions?.length > 0 ? (
+              account.transactions.map((transaction, index) => (
+                <Collapse
+                  key={index}
+                  id={`collapse${index + 1}`}
+                  transaction={transaction}
+                  transaction_id={transaction._id}
+                />
+              ))
+            ) : (
+              <p>Aucune transaction disponible.</p>
+            )}
           </div>
         </>
       ) : (

@@ -5,7 +5,7 @@ import { UPDATE_USER } from "./get.action";
 import { ACCOUNT_USER } from "./get.action";
 import { TOGGLE_COLLAPSE } from "./toggle.action";
 import { RESET_STATE } from "./fetch.action";
-
+import { UPDATE_ACCOUNT_NOTE } from "./get.action";
 export {
   GET_LOGIN,
   GET_USER,
@@ -14,4 +14,5 @@ export {
   ACCOUNT_USER,
   TOGGLE_COLLAPSE,
   RESET_STATE,
+  UPDATE_ACCOUNT_NOTE,
 };

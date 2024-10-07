@@ -2,12 +2,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAccounts } from "../actions/get.action";
 import { useNavigate } from "react-router-dom";
+import "../styles/animation.css";
 
 export function BankAccount() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const accounts = useSelector((state) => state.acc?.accounts?.accounts);
+  const accounts = useSelector((state) => state.acc?.accounts);
 
   useEffect(() => {
     dispatch(getAccounts());
@@ -21,8 +22,7 @@ export function BankAccount() {
   }
   return (
     <div>
-      <div className="account-windows">
-        {/* Compte 1 */}
+      <div className="account-windows entries-anim">
         <div className="account-window">
           <div className="account-info">
             <p>
@@ -44,7 +44,6 @@ export function BankAccount() {
           </div>
         </div>
 
-        {/* Compte 2 */}
         <div className="account-window">
           <div className="account-info">
             <p>
@@ -66,7 +65,6 @@ export function BankAccount() {
           </div>
         </div>
 
-        {/* Compte 3 */}
         <div className="account-window">
           <div className="account-info">
             <p>

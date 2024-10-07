@@ -1,6 +1,7 @@
 export const GET_USER = "GET_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const ACCOUNT_USER = "ACCOUNT_USER";
+export const UPDATE_ACCOUNT_NOTE = " UPDATE_ACCOUNT_NOTE";
 
 export const getUser = () => {
   return async (dispatch, getState) => {
@@ -18,6 +19,7 @@ export const getUser = () => {
         }
       );
       const data = await response.json();
+
       if (data && data.body) {
         dispatch({ type: GET_USER, payload: data.body });
       } else {
@@ -61,11 +63,45 @@ export const getAccounts = () => async (dispatch, getState) => {
       throw new Error(`Erreur du serveur : ${response.statusText}`);
     }
     const data = await response.json();
+
     dispatch({
       type: ACCOUNT_USER,
-      payload: data || [],
+      payload: data,
     });
   } catch (error) {
     console.error("Erreur lors de la récupération des comptes:", error);
   }
 };
+
+export const updateAccountNote =
+  (transactionNote, transaction_id) => async (dispatch, getState) => {
+    const token = getState().auth.accessToken;
+
+    if (!transactionNote || !transaction_id) {
+      throw new Error("Transaction note and ID are required");
+    }
+
+    const response = await fetch(
+      "http://localhost:3001/api/v1/transactions/update-note",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ transactionNote, transaction_id }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de la mise à jour transactrionNote");
+    }
+
+    dispatch({
+      type: UPDATE_ACCOUNT_NOTE,
+      payload: {
+        transaction_id,
+        transactionNote,
+      },
+    });
+  };

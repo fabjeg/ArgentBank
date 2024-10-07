@@ -1,17 +1,50 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { toggleCollapse } from "../actions/toggle.action";
-import { DropDownMenu } from "./drop-down";
 import "../styles/collapse.css";
 import "../styles/main.css";
+import { DropDownMenu } from "./index";
+
+import { updateAccountNote } from "../actions/get.action";
 
 export function Collapse({ id, transaction }) {
   const dispatch = useDispatch();
+  const inputNote = useRef();
   const isOpen = useSelector((state) => state.collapse[id] || false);
-  const contentRef = useRef(null);
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const [isEditingNote, setIsEditingNote] = useState(false);
+  const [noteValue, setNoteValue] = useState(transaction.transactionNote);
+  const [selectedCategory, setSelectedCategory] = useState(
+    transaction.transactionCategory || ""
+  );
 
   const toggle = () => {
     dispatch(toggleCollapse(id));
+    setIsDropDownOpen(false);
+  };
+
+  const handleCategoryPencilClick = () => {
+    setIsDropDownOpen(!isDropDownOpen);
+  };
+
+  const handleNotePencilClick = () => {
+    setIsEditingNote(true);
+  };
+
+  const handleNoteChange = (e) => {
+    setNoteValue(e.target.value);
+  };
+
+  const handleSaveClick = () => {
+    const postNote = {
+      transaction_id: transaction._id,
+      transactionNote: noteValue,
+    };
+
+    dispatch(
+      updateAccountNote(postNote.transactionNote, postNote.transaction_id)
+    );
+    setIsEditingNote(false);
   };
 
   return (
@@ -19,51 +52,69 @@ export function Collapse({ id, transaction }) {
       <div className="container-button">
         <button
           className={`collapse-button ${isOpen ? "collapse-button-open" : ""}`}
+          onClick={toggle}
         >
           <p>{transaction.date}</p>
           <p>{transaction.description}</p>
           <p>$ {transaction.transactionAmount}</p>
           <p>$ {transaction.balanceAfterTransaction}</p>
           <span
-            onClick={toggle}
             className={`fa-solid fa-chevron-up chevron ${
               isOpen ? "rotate" : ""
             }`}
           />
         </button>
       </div>
-      <div
-        ref={contentRef}
-        className={`container-toggle ${isOpen ? "open" : ""}`}
-      >
+      <div className={`container-toggle ${isOpen ? "open" : ""}`}>
         <div className="toggle">
-          <label>
-            <p>Transaction type</p>
+          <p>Transaction type</p>
+          <p>Category</p>
+          <p>Note</p>
+        </div>
+        <div className="container-input">
+          <input
+            type="text"
+            className="input-toggle"
+            value="Electronic"
+            readOnly
+          />
+          <div className="pencil">
             <input
               type="text"
-              className="container-input"
-              value="Electronic"
+              className="input-toggle"
+              value={selectedCategory}
               readOnly
             />
-            <span className="fa-solid fa-pencil pencil" />
-          </label>
-          <label className="category">
-            <p>Category</p>
-            <input
-              type="text"
-              className="container-input"
-              readOnly
+            <span
+              className="fa-solid fa-pencil"
+              onClick={handleCategoryPencilClick}
             />
-            <DropDownMenu id={`toggleCollapse-${id}`} />
-          </label>
-          <label>
-            <p>Note</p>
+          </div>
+          <div className="pencil">
             <input
+              ref={inputNote}
               type="text"
-              className="container-input"
+              className="input-toggle"
+              value={noteValue}
+              onChange={handleNoteChange}
+              readOnly={!isEditingNote}
             />
-            <span className="fa-solid fa-pencil" />
-          </label>
+            <span
+              className="fa-solid fa-pencil"
+              onClick={handleNotePencilClick}
+            />
+            {isDropDownOpen && (
+              <DropDownMenu onSelectCategory={setSelectedCategory} />
+            )}
+            {isEditingNote && (
+              <button
+                onClick={handleSaveClick}
+                className="save-button"
+              >
+                Valider
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import "../styles/main.css";
 
 export function UserInfo() {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.user || {});
+  const userInfo = useSelector((state) => state.user);
   const [username, setUsername] = useState(userInfo.userName || "");
   const [initialUsername, setInitialUsername] = useState(
     userInfo.userName || ""
@@ -39,7 +39,7 @@ export function UserInfo() {
   };
 
   return (
-    <div className="container-form">
+    <div className="container-form anim-form">
       <h2>Edit user info</h2>
       <form onSubmit={handleSave}>
         <label>

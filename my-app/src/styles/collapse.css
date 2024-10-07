@@ -50,25 +50,32 @@
   flex-direction: column;
   color: white;
   text-align: left;
-  padding: 5px 0 5px 10px;
+  padding: 5px 0 5px 0;
 }
-
+.container-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
+  margin-top: 16px;
+  margin-left: 8%;
+}
 .toggle label {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-.container-input {
+.input-toggle {
   border: none;
   outline: none;
   padding: 5px;
   border-radius: 4px;
   color: white;
-  /* background-color: transparent; */
-  flex: 1;
+  background-color: transparent;
   margin-right: 10px;
   font-size: 17px;
+  cursor: default;
+  width: 50%;
 }
 .category {
   margin-right: 5%;
@@ -82,7 +89,8 @@
   width: 100%;
 }
 .pencil {
-  color: transparent;
+  display: flex;
+  margin: 0;
 }
 
 @keyframes slideDown {
@@ -112,8 +120,10 @@
   display: flex;
   justify-content: flex-start;
   border-radius: 0 0 10px 10px;
-  padding: 8px 0 5px 8px;
+  padding: 8px 0 5px 0;
   transition: max-height 0.5s ease, opacity 0.5s ease;
+
+  padding-inline: 2%;
 }
 
 .container-toggle.open {
@@ -122,4 +132,14 @@
 
 .container-toggle:not(.open) {
   animation: slideUp 0.5s forwards ease-out;
+}
+
+.save-button,
+button {
+  position: relative;
+  border: none;
+  margin-right: 0;
+  color: white;
+  background-color: #00bc77;
+  font-size: 17px;
 }
