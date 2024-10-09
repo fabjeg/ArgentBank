@@ -1,7 +1,6 @@
 export const GET_USER = "GET_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const ACCOUNT_USER = "ACCOUNT_USER";
-export const UPDATE_ACCOUNT_NOTE = " UPDATE_ACCOUNT_NOTE";
 
 export const getUser = () => {
   return async (dispatch, getState) => {
@@ -74,12 +73,9 @@ export const getAccounts = () => async (dispatch, getState) => {
 };
 
 export const updateAccountNote =
-  (transactionNote, transaction_id) => async (dispatch, getState) => {
+  (transactionNote, transaction_id, transactionCategory) =>
+  async (dispatch, getState) => {
     const token = getState().auth.accessToken;
-
-    if (!transactionNote || !transaction_id) {
-      throw new Error("Transaction note and ID are required");
-    }
 
     const response = await fetch(
       "http://localhost:3001/api/v1/transactions/update-note",
@@ -89,19 +85,22 @@ export const updateAccountNote =
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ transactionNote, transaction_id }),
+        body: JSON.stringify({
+          transaction_id,
+          transactionNote,
+          transactionCategory,
+        }),
       }
     );
 
     if (!response.ok) {
       throw new Error("Erreur lors de la mise à jour transactrionNote");
     }
+    const data = await response.json();
+    console.log("====>", [data.body]);
 
     dispatch({
-      type: UPDATE_ACCOUNT_NOTE,
-      payload: {
-        transaction_id,
-        transactionNote,
-      },
+      type: ACCOUNT_USER,
+      payload: [data.body],
     });
   };

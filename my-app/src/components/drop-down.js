@@ -18,6 +18,7 @@ export function DropDownMenu({ onSelectCategory }) {
     const selectedCategory = event.target.value;
     onSelectCategory(selectedCategory);
   };
+
   return (
     <div className="container-category">
       <select

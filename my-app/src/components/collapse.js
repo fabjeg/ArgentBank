@@ -17,18 +17,19 @@ export function Collapse({ id, transaction }) {
   const [selectedCategory, setSelectedCategory] = useState(
     transaction.transactionCategory || ""
   );
+  const [isEditingCategory, setIsEditingCategory] = useState(false);
 
   const toggle = () => {
     dispatch(toggleCollapse(id));
     setIsDropDownOpen(false);
   };
 
-  const handleCategoryPencilClick = () => {
-    setIsDropDownOpen(!isDropDownOpen);
-  };
-
   const handleNotePencilClick = () => {
-    setIsEditingNote(true);
+    if (isEditingNote) {
+      handleSaveClick();
+    } else {
+      setIsEditingNote(true);
+    }
   };
 
   const handleNoteChange = (e) => {
@@ -39,12 +40,40 @@ export function Collapse({ id, transaction }) {
     const postNote = {
       transaction_id: transaction._id,
       transactionNote: noteValue,
+      transactionCategory: selectedCategory,
     };
-
     dispatch(
-      updateAccountNote(postNote.transactionNote, postNote.transaction_id)
+      updateAccountNote(
+        postNote.transactionNote,
+        postNote.transaction_id,
+        postNote.transactionCategory
+      )
     );
     setIsEditingNote(false);
+  };
+
+  const handleCategoryPencilClick = () => {
+    setIsDropDownOpen(!isDropDownOpen);
+    if (isEditingCategory) {
+      handleCategorySave();
+    } else {
+      setIsEditingCategory(true);
+    }
+  };
+  const handleCategorySave = () => {
+    const postCategory = {
+      transaction_id: transaction._id,
+      transactionCategory: selectedCategory,
+      transactionNote: noteValue,
+    };
+    dispatch(
+      updateAccountNote(
+        postCategory.transactionNote,
+        postCategory.transaction_id,
+        postCategory.transactionCategory
+      )
+    );
+    setIsEditingCategory(false);
   };
 
   return (
@@ -94,7 +123,7 @@ export function Collapse({ id, transaction }) {
             <input
               ref={inputNote}
               type="text"
-              className="input-toggle"
+              className={`input-toggle ${isEditingNote ? "input-editing" : ""}`}
               value={noteValue}
               onChange={handleNoteChange}
               readOnly={!isEditingNote}
@@ -105,14 +134,6 @@ export function Collapse({ id, transaction }) {
             />
             {isDropDownOpen && (
               <DropDownMenu onSelectCategory={setSelectedCategory} />
-            )}
-            {isEditingNote && (
-              <button
-                onClick={handleSaveClick}
-                className="save-button"
-              >
-                Valider
-              </button>
             )}
           </div>
         </div>

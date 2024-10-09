@@ -88,7 +88,7 @@ body {
 }
 
 .hero {
-  background-image: url("../asset/bank-tree.jpeg");
+  background-image: url("../asset/bank-tree.webp");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -380,4 +380,10 @@ body {
   font-size: 80px;
   margin-top: 30px;
   cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .style-button {
+    gap: 0;
+  }
 }

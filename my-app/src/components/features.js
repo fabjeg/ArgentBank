@@ -1,6 +1,6 @@
-import iconChat from "../asset/icon-chat.png";
-import iconMoney from "../asset/icon-money.png";
-import iconSecurity from "../asset/icon-security.png";
+import iconChat from "../asset/icon-chat.webp";
+import iconMoney from "../asset/icon-money.webp";
+import iconSecurity from "../asset/icon-security.webp";
 import "../styles/main.css";
 
 export function Feature() {
