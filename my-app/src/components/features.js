@@ -1,7 +1,7 @@
 import iconChat from "../asset/icon-chat.webp";
 import iconMoney from "../asset/icon-money.webp";
 import iconSecurity from "../asset/icon-security.webp";
-import "../styles/main.css";
+import "../styles/main.min.css";
 
 export function Feature() {
   return (

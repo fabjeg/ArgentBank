@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { getUser, updateUser } from "../actions/get.action";
-import "../styles/main.css";
+import "../styles/main.min.css";
 
 export function UserInfo() {
   const dispatch = useDispatch();
@@ -78,14 +78,14 @@ export function UserInfo() {
             type="submit"
             onClick={handleSave}
           >
-            Enregistrer
+            Save
           </button>
           <button
             className="button-form"
             type="button"
             onClick={handleDelete}
           >
-            Supprimer
+            Cancel
           </button>
         </div>
       </form>

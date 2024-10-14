@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../actions/fetch.action";
-import "../styles/main.css";
+import "../styles/main.min.css";
 
 export function Form() {
   const [username, setUsername] = useState("");

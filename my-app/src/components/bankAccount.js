@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAccounts } from "../actions/get.action";
 import { useNavigate } from "react-router-dom";
-import "../styles/animation.css";
+import "../styles/animation.min.css";
 
 export function BankAccount() {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import { toggleCollapse } from "../actions/toggle.action";
-import "../styles/collapse.css";
-import "../styles/main.css";
+import "../styles/collapse.min.css";
+import "../styles/main.min.css";
 import { DropDownMenu } from "./index";
 
 import { updateAccountNote } from "../actions/get.action";

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Logo2 from "../asset/argentBank2.webp";
 import Logo from "../asset/argentBankLogo.webp";
-import "../styles/main.css";
+import "../styles/main.min.css";
 import { Link, useNavigate } from "react-router-dom";
 import { logout, resetState } from "../actions/fetch.action";
 
@@ -13,6 +13,10 @@ export function Header() {
 
   const handleClick = () => {
     navigate("/");
+  };
+
+  const HandlUserClick = () => {
+    navigate("/Account");
   };
 
   const handleSignOut = () => {
@@ -32,17 +36,24 @@ export function Header() {
       <h1 className="sr-only">Argent Bank</h1>
       <div>
         {accessToken ? (
-          <button
-            onClick={handleSignOut}
-            className="style-button"
-          >
-            <div className="user-name">
-              <span>{userName}</span>
-              <span className="fa-solid fa-circle-user"></span>
+          <>
+            <div className="container-buttons">
+              <div
+                className="user-name"
+                onClick={HandlUserClick}
+              >
+                <span>{userName}</span>
+                <span className="fa-solid fa-circle-user"></span>
+              </div>
+              <button
+                onClick={handleSignOut}
+                className="style-button"
+              >
+                <span className="fa-solid fa-gear" />
+                <span className="fa-solid fa-power-off" />
+              </button>
             </div>
-            <span className="fa-solid fa-gear" />
-            <span className="fa-solid fa-power-off" />
-          </button>
+          </>
         ) : (
           <Link
             className="main-nav-item"

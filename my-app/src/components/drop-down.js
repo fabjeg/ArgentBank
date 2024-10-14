@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import "../styles/drop-down.css";
+import "../styles/drop-down.min.css";
 
 export function DropDownMenu({ onSelectCategory }) {
   const accounts = useSelector((state) => state.acc.accounts);
