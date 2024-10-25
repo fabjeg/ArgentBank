@@ -1,94 +1,101 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { getUser, updateUser } from "../actions/get.action";
-import "../styles/main.min.css";
+import { updateUser, getUser } from "../features/userSlice";
+import "../styles/main.css";
 
 export function UserInfo() {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.user);
-  const [username, setUsername] = useState(userInfo.userName || "");
-  const [initialUsername, setInitialUsername] = useState(
-    userInfo.userName || ""
-  );
+  const { userName, firstName, lastName } = useSelector((state) => state.user);
+  const { accessToken } = useSelector((state) => state.auth);
+  const [username, setUsername] = useState(userName);
+  const [isFormVisible, setIsFormVisible] = useState(true);
 
   useEffect(() => {
-    setUsername(userInfo.userName || "");
-    setInitialUsername(userInfo.userName || "");
-  }, [userInfo]);
+    if (accessToken) {
+      dispatch(getUser());
+    }
+  }, [accessToken, dispatch]);
 
   useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
+    setUsername(userName);
+  }, [userName]);
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
+  const handleUsernameChange = (e) => setUsername(e.target.value);
 
   const handleSave = (e) => {
     e.preventDefault();
-    if (username !== initialUsername) {
+    if (username) {
       dispatch(updateUser(username));
-      setInitialUsername(username);
+      setIsFormVisible(false);
     }
   };
 
-  const handleDelete = () => {
-    setUsername("");
-    setInitialUsername("");
+  const handleCancel = () => {
     dispatch(updateUser(""));
+    setUsername("");
   };
 
   return (
-    <div className="container-form anim-form">
-      <h2>Edit user info</h2>
-      <form onSubmit={handleSave}>
-        <label>
-          User name:
-          <input
-            className="input-form-user"
-            type="text"
-            value={username || ""}
-            onChange={handleUsernameChange}
-          />
-        </label>
-        <br />
-        <label>
-          First name:
-          <input
-            className="input-form-user"
-            type="text"
-            value={userInfo.firstName || ""}
-            readOnly
-          />
-        </label>
-        <br />
-        <label>
-          Last name:
-          <input
-            className="input-form-user"
-            type="text"
-            value={userInfo.lastName || ""}
-            readOnly
-          />
-        </label>
-        <br />
-        <div className="container-button">
-          <button
-            className="button-form"
-            type="submit"
-            onClick={handleSave}
-          >
-            Save
-          </button>
-          <button
-            className="button-form"
-            type="button"
-            onClick={handleDelete}
-          >
-            Cancel
-          </button>
+    <div>
+      {isFormVisible ? (
+        <div className="container-form anim-form">
+          <h2>Edit user info</h2>
+          <form onSubmit={handleSave}>
+            <label>
+              User name:
+              <input
+                className="input-form-user"
+                type="text"
+                value={username || ""}
+                onChange={handleUsernameChange}
+              />
+            </label>
+            <br />
+            <label>
+              First name:
+              <input
+                className="input-form-user"
+                type="text"
+                value={firstName || ""}
+                readOnly
+              />
+            </label>
+            <br />
+            <label>
+              Last name:
+              <input
+                className="input-form-user"
+                type="text"
+                value={lastName || ""}
+                readOnly
+              />
+            </label>
+            <br />
+            <div className="container-button">
+              <button
+                className="button-form"
+                type="submit"
+              >
+                Save
+              </button>
+              <button
+                className="button-form"
+                type="button"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      ) : (
+        <button
+          className="editUserName"
+          onClick={() => setIsFormVisible(true)}
+        >
+          Edit Username
+        </button>
+      )}
     </div>
   );
 }

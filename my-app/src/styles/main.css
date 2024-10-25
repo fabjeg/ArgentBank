@@ -388,6 +388,15 @@ body {
   margin-top: 30px;
   cursor: pointer;
 }
+.editUserName {
+  background-color: #4caf50;
+  color: white;
+  margin: 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 15px 50px;
+}
 
 @media (max-width: 480px) {
   .container-button {
@@ -409,4 +418,26 @@ body {
     gap: 0;
     margin: 0;
   }
+}
+.transaction-headers {
+  display: flex;
+  justify-content: space-around;
+  padding-right: 16%;
+  padding-left: 4%;
+}
+.containerNote {
+  width: 30%;
+  /* height: 50%; */
+  display: flex;
+  margin: 0;
+}
+.inputNote {
+  height: 80%;
+  border: none;
+}
+.buttonNote {
+  height: 85%;
+  border: none;
+  background-color: #4caf50;
+  color: white;
 }

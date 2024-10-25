@@ -1,12 +1,13 @@
-.category {
+.selecte {
   font-size: 17px;
   border: none;
   color: black;
-  outline: none;
 }
+
 .container-category {
-  position: relative;
-  bottom: 46px;
-  left: 10%;
-  width: 9%;
+  position: absolute;
+  left: 100%;
+  background: white;
+  border-radius: 5px;
+  padding: 10px;
 }

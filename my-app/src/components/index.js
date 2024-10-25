@@ -5,17 +5,5 @@ import { Footer } from "./footer";
 import { Form } from "./form";
 import { UserInfo } from "./userInfo";
 import { BankAccount } from "./bankAccount";
-import { Collapse } from "./collapse";
-import { DropDownMenu } from "./drop-down";
 
-export {
-  Header,
-  Banner,
-  Feature,
-  Footer,
-  Form,
-  UserInfo,
-  BankAccount,
-  Collapse,
-  DropDownMenu,
-};
+export { Header, Banner, Feature, Footer, Form, UserInfo, BankAccount };

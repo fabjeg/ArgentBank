@@ -1,143 +1,139 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState } from "react";
-import { toggleCollapse } from "../actions/toggle.action";
-import "../styles/collapse.min.css";
-import "../styles/main.min.css";
-import { DropDownMenu } from "./index";
+import { useState } from "react";
+import { DropDownMenu } from "../components/drop-down";
+import "../styles/collapse.css";
 
-import { updateAccountNote } from "../actions/get.action";
-
-export function Collapse({ id, transaction }) {
-  const dispatch = useDispatch();
-  const inputNote = useRef();
-  const isOpen = useSelector((state) => state.collapse[id] || false);
+export function Collapse({ transactions: initialTransactions }) {
+  const [transactions, setTransactions] = useState(initialTransactions); // État local pour les transactions
+  const [openIndex, setOpenIndex] = useState(null);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  const [isEditingNote, setIsEditingNote] = useState(false);
-  const [noteValue, setNoteValue] = useState(transaction.transactionNote);
-  const [selectedCategory, setSelectedCategory] = useState(
-    transaction.transactionCategory || ""
-  );
-  const [isEditingCategory, setIsEditingCategory] = useState(false);
+  const [noteInput, setNoteInput] = useState("");
+  const [editingNoteIndex, setEditingNoteIndex] = useState(null);
 
-  const toggle = () => {
-    dispatch(toggleCollapse(id));
+  const toggleCollapse = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
     setIsDropDownOpen(false);
+    setEditingNoteIndex(null);
   };
 
-  const handleNotePencilClick = () => {
-    if (isEditingNote) {
-      handleSaveClick();
-    } else {
-      setIsEditingNote(true);
+  const handleCategoryClick = () => {
+    setIsDropDownOpen(!isDropDownOpen);
+  };
+
+  const handleCategorySelect = (category) => {
+    if (openIndex !== null) {
+      const updatedTransactions = [...transactions];
+      updatedTransactions[openIndex] = {
+        ...updatedTransactions[openIndex],
+        transactionCategory: category,
+      };
+      setTransactions(updatedTransactions); // Mettre à jour l'état transactions
+      setIsDropDownOpen(false);
     }
+  };
+
+  const handleNoteEditClick = (index) => {
+    setEditingNoteIndex(index);
+    setNoteInput(transactions[index].transactionNote || "");
   };
 
   const handleNoteChange = (e) => {
-    setNoteValue(e.target.value);
+    setNoteInput(e.target.value);
   };
 
-  const handleSaveClick = () => {
-    const postNote = {
-      transaction_id: transaction._id,
-      transactionNote: noteValue,
-      transactionCategory: selectedCategory,
+  const handleNoteSave = (index) => {
+    const updatedTransactions = [...transactions];
+    updatedTransactions[index] = {
+      ...updatedTransactions[index],
+      transactionNote: noteInput,
     };
-    dispatch(
-      updateAccountNote(
-        postNote.transactionNote,
-        postNote.transaction_id,
-        postNote.transactionCategory
-      )
-    );
-    setIsEditingNote(false);
-  };
-
-  const handleCategoryPencilClick = () => {
-    setIsDropDownOpen(!isDropDownOpen);
-    if (isEditingCategory) {
-      handleCategorySave();
-    } else {
-      setIsEditingCategory(true);
-    }
-  };
-  const handleCategorySave = () => {
-    const postCategory = {
-      transaction_id: transaction._id,
-      transactionCategory: selectedCategory,
-      transactionNote: noteValue,
-    };
-    dispatch(
-      updateAccountNote(
-        postCategory.transactionNote,
-        postCategory.transaction_id,
-        postCategory.transactionCategory
-      )
-    );
-    setIsEditingCategory(false);
+    setTransactions(updatedTransactions); // Mettre à jour l'état transactions
+    setEditingNoteIndex(null);
   };
 
   return (
-    <div>
-      <div className="container-button">
-        <button
-          className={`collapse-button ${isOpen ? "collapse-button-open" : ""}`}
-          onClick={toggle}
-        >
-          <p>{transaction.date}</p>
-          <p>{transaction.description}</p>
-          <p>$ {transaction.transactionAmount}</p>
-          <p>$ {transaction.balanceAfterTransaction}</p>
-          <span
-            className={`fa-solid fa-chevron-up chevron ${
-              isOpen ? "rotate" : ""
-            }`}
-          />
-        </button>
-      </div>
-      <div className={`container-toggle ${isOpen ? "open" : ""}`}>
-        <div className="toggle">
-          <p>Transaction type</p>
-          <p>Category</p>
-          <p>Note</p>
-        </div>
-        <div className="container-input">
-          <input
-            type="text"
-            className="input-toggle"
-            value="Electronic"
-            readOnly
-          />
-          <div className="pencil">
-            <input
-              type="text"
-              className="input-toggle"
-              value={selectedCategory}
-              readOnly
-            />
-            <span
-              className="fa-solid fa-pencil"
-              onClick={handleCategoryPencilClick}
-            />
-          </div>
-          <div className="pencil">
-            <input
-              ref={inputNote}
-              type="text"
-              className={`input-toggle ${isEditingNote ? "input-editing" : ""}`}
-              value={noteValue}
-              onChange={handleNoteChange}
-              readOnly={!isEditingNote}
-            />
-            <span
-              className="fa-solid fa-pencil"
-              onClick={handleNotePencilClick}
-            />
-            {isDropDownOpen && (
-              <DropDownMenu onSelectCategory={setSelectedCategory} />
-            )}
-          </div>
-        </div>
-      </div>
+    <div className="collapse-container">
+      {transactions.length > 0 ? (
+        <ul className="transaction-list">
+          {transactions.map((transaction, index) => (
+            <li
+              key={index}
+              className="transaction-item"
+            >
+              <div
+                className={`transaction-summary ${
+                  openIndex === index ? "open" : ""
+                }`}
+                onClick={() => toggleCollapse(index)}
+              >
+                <p>{transaction.date}</p>
+                <p>{transaction.description}</p>
+                <p>{transaction.transactionAmount}</p>
+                <p>{transaction.balanceAfterTransaction}</p>
+                <span
+                  className={`fa-solid ${
+                    openIndex === index ? "fa-chevron-up" : "fa-chevron-down"
+                  }`}
+                ></span>
+              </div>
+              {openIndex === index && (
+                <div
+                  className={`transaction-details ${
+                    openIndex === index ? "open-details" : ""
+                  }`}
+                >
+                  <div className="transaction-type">
+                    <p>Transaction type</p>
+                    <p className="type">{transaction.transactionType}</p>
+                  </div>
+                  <div className="transaction-category">
+                    <p>Category</p>
+                    <p className="category">
+                      {transaction.transactionCategory}
+                      <span
+                        className="fa-solid fa-pencil"
+                        onClick={handleCategoryClick}
+                      />
+                    </p>
+                    {isDropDownOpen && (
+                      <DropDownMenu onSelectCategory={handleCategorySelect} />
+                    )}
+                  </div>
+                  <div className="transaction-note">
+                    <p>Note</p>
+                    {editingNoteIndex === index ? (
+                      <div className="containerNote">
+                        <input
+                          className="inputNote"
+                          type="text"
+                          value={noteInput}
+                          onChange={handleNoteChange}
+                          placeholder="Saisissez une note"
+                        />
+                        <button
+                          className="buttonNote"
+                          onClick={() => handleNoteSave(index)}
+                        >
+                          Sauvegarder
+                        </button>
+                      </div>
+                    ) : (
+                      <p className="note">
+                        {transaction.transactionNote || "Aucune note"}
+                        <span
+                          className="fa-solid fa-pencil"
+                          onClick={() => handleNoteEditClick(index)}
+                        />
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Aucune transaction disponible</p>
+      )}
     </div>
   );
 }

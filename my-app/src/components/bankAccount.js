@@ -1,91 +1,79 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { getAccounts } from "../actions/get.action";
-import { useNavigate } from "react-router-dom";
-import "../styles/animation.min.css";
+import { useState } from "react";
+import transactions from "../data/transactions.json";
+import { Collapse } from "../components/collapse";
+import "../styles/main.css";
 
-export function BankAccount() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+export function BankAccount({ setIsUserInfoVisible }) {
+  const accounts = transactions;
+  const [activeAccountIndex, setActiveAccountIndex] = useState(null);
 
-  const accounts = useSelector((state) => state.acc?.accounts);
-
-  useEffect(() => {
-    dispatch(getAccounts());
-  }, [dispatch]);
-
-  const handleClick = (id) => {
-    navigate(`/BankAccountDetails/${id}`);
+  const handleShowCollapses = (index) => {
+    setActiveAccountIndex(index);
+    setIsUserInfoVisible(false); // Cacher UserInfo quand un chevron est cliqué
   };
-  if (!accounts || accounts.length === 0) {
-    return <div>Aucun compte disponible</div>;
-  }
+
+  const handleBack = () => {
+    setActiveAccountIndex(null);
+    setIsUserInfoVisible(true); // Réafficher UserInfo quand on revient
+  };
+
   return (
-    <div>
-      <div className="account-windows entries-anim">
-        <div className="account-window">
-          <div className="account-info">
-            <p>
-              Argent Bank (
-              {accounts[0]?.account1?.accountDetails?.accountNumber})
-            </p>
-            <p className="text-account">
-              $ {accounts[0]?.account1?.accountDetails?.accountBalance}
-            </p>
-            <p>
-              {accounts[0]?.account1?.transactions?.length} Available Balance
-            </p>
+    <div className="account-container">
+      {activeAccountIndex === null ? (
+        <div className="account-windows">
+          {accounts.map((account, index) => (
+            <div
+              key={index}
+              className="account-window"
+              onClick={() => handleShowCollapses(index)}
+            >
+              <div className="account-info">
+                <p>Argent Bank ({account?.accountDetails?.accountNumber})</p>
+                <p className="text-account">
+                  $ {account?.accountDetails?.accountBalance}
+                </p>
+                <p>{account?.transactions?.length} Transactions disponibles</p>
+              </div>
+              <span className="fa-solid fa-chevron-right"></span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="account-details-container">
+          <div className="account-window">
+            <div className="account-info">
+              <p>
+                Argent Bank (
+                {accounts[activeAccountIndex]?.accountDetails?.accountNumber})
+              </p>
+              <p className="text-account">
+                $ {accounts[activeAccountIndex]?.accountDetails?.accountBalance}
+              </p>
+              <p>
+                {accounts[activeAccountIndex]?.transactions?.length}{" "}
+                Transactions disponibles
+              </p>
+            </div>
+            <div
+              className="back-button"
+              onClick={handleBack}
+            >
+              <span className="fa-solid fa-xmark"></span>
+            </div>
           </div>
-          <div
-            className="container-chevron"
-            onClick={() => handleClick("account1")}
-          >
-            <span className={"fa-solid fa-chevron-right"}></span>
+          <div className="transaction-headers">
+            <p>Date</p>
+            <p>Description</p>
+            <p>Amount</p>
+            <p>Balance</p>
+          </div>
+          <div className="collapses-container">
+            <Collapse
+              transactions={accounts[activeAccountIndex].transactions}
+            />
           </div>
         </div>
-
-        <div className="account-window">
-          <div className="account-info">
-            <p>
-              Argent Bank (
-              {accounts[0]?.account2?.accountDetails?.accountNumber})
-            </p>
-            <p className="text-account">
-              $ {accounts[0]?.account2?.accountDetails?.accountBalance}
-            </p>
-            <p>
-              {accounts[0]?.account2?.transactions?.length} Available Balance
-            </p>
-          </div>
-          <div
-            className="container-chevron"
-            onClick={() => handleClick("account2")}
-          >
-            <span className={"fa-solid fa-chevron-right"}></span>
-          </div>
-        </div>
-
-        <div className="account-window">
-          <div className="account-info">
-            <p>
-              Argent Bank (
-              {accounts[0]?.account3?.accountDetails?.accountNumber})
-            </p>
-            <p className="text-account">
-              $ {accounts[0]?.account3?.accountDetails?.accountBalance}
-            </p>
-            <p>
-              {accounts[0]?.account3?.transactions?.length} Available Balance
-            </p>
-          </div>
-          <div
-            className="container-chevron"
-            onClick={() => handleClick("account3")}
-          >
-            <span className={"fa-solid fa-chevron-right"}></span>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

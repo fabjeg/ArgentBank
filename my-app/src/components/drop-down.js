@@ -1,19 +1,23 @@
-import { useSelector } from "react-redux";
-import "../styles/drop-down.min.css";
+import { useState, useEffect } from "react";
+import "../styles/drop-down.css";
+import transactions from "../data/transactions.json";
 
 export function DropDownMenu({ onSelectCategory }) {
-  const accounts = useSelector((state) => state.acc.accounts);
+  const [categories, setCategories] = useState([]);
 
-  const allAccounts = Object.values(accounts[0]);
-  const transactions = allAccounts.flatMap(
-    (account) => account.transactions || []
-  );
+  useEffect(() => {
+    const allAccounts = transactions;
+    const allTransactions = allAccounts.flatMap(
+      (account) => account.transactions || []
+    );
+    const uniqueCategories = [
+      ...new Set(
+        allTransactions.map((transaction) => transaction.transactionCategory)
+      ),
+    ];
+    setCategories(uniqueCategories);
+  }, []);
 
-  const categories = [
-    ...new Set(
-      transactions.map((transaction) => transaction.transactionCategory)
-    ),
-  ];
   const handleChange = (event) => {
     const selectedCategory = event.target.value;
     onSelectCategory(selectedCategory);
@@ -22,7 +26,7 @@ export function DropDownMenu({ onSelectCategory }) {
   return (
     <div className="container-category">
       <select
-        className="category"
+        className="selecte"
         onChange={handleChange}
       >
         {categories.map((category, index) => (

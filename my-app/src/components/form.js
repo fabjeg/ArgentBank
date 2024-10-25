@@ -1,34 +1,22 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import "../styles/main.css";
+import { login } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
-import { login } from "../actions/fetch.action";
-import "../styles/main.min.css";
 
 export function Form() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState(null);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const accessToken = useSelector((state) => state.auth.accessToken);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setError(null);
-    try {
-      await dispatch(login(username, password));
-    } catch (err) {
-      setError("Échec de la connexion. Veuillez vérifier vos identifiants.");
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await dispatch(login({ username, password })).unwrap();
+    navigate("/Account");
   };
-
-  useEffect(() => {
-    if (accessToken) {
-      navigate("/Account");
-    }
-  }, [accessToken, navigate]);
 
   return (
     <main className="main bg-dark">
@@ -38,7 +26,7 @@ export function Form() {
           aria-hidden="true"
         ></span>
         <h1>Sign In</h1>
-        {error && <div className="error-message">{error}</div>}
+
         <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
             <label htmlFor="username">Username</label>

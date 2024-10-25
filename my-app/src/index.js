@@ -1,35 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Footer, Header } from "./components/index"; // Retirez CompteHeader
+import { Footer, Header } from "./components/index";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "../src/reducers/index";
-import { SignUp, Home, Account, BankAccountDetail } from "../src/pages/";
+import { SignUp, Home, Account } from "../src/pages/";
 import { PersistGate } from "redux-persist/integration/react";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-
-const persistConfig = {
-  key: "root",
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
-      },
-    }),
-  devTools: true,
-});
-
-const persistor = persistStore(store);
+import { store, persistor } from "./store/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -53,10 +30,6 @@ root.render(
             <Route
               path="/Account"
               element={<Account />}
-            />
-            <Route
-              path="/BankAccountDetails/:accountId"
-              element={<BankAccountDetail />}
             />
           </Routes>
           <Footer />
