@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { logout } from "./authSlice";
 
 const initialState = {
   userName: "",
@@ -61,6 +62,9 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.userName = action.payload.userName;
+      })
+      .addCase(logout, () => {
+        return initialState;
       });
   },
 });

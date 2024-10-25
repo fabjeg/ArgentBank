@@ -9,12 +9,12 @@ export function BankAccount({ setIsUserInfoVisible }) {
 
   const handleShowCollapses = (index) => {
     setActiveAccountIndex(index);
-    setIsUserInfoVisible(false); // Cacher UserInfo quand un chevron est cliqué
+    setIsUserInfoVisible(false);
   };
 
   const handleBack = () => {
     setActiveAccountIndex(null);
-    setIsUserInfoVisible(true); // Réafficher UserInfo quand on revient
+    setIsUserInfoVisible(true);
   };
 
   return (

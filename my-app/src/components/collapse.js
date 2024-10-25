@@ -3,7 +3,7 @@ import { DropDownMenu } from "../components/drop-down";
 import "../styles/collapse.css";
 
 export function Collapse({ transactions: initialTransactions }) {
-  const [transactions, setTransactions] = useState(initialTransactions); // État local pour les transactions
+  const [transactions, setTransactions] = useState(initialTransactions);
   const [openIndex, setOpenIndex] = useState(null);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [noteInput, setNoteInput] = useState("");
@@ -26,7 +26,7 @@ export function Collapse({ transactions: initialTransactions }) {
         ...updatedTransactions[openIndex],
         transactionCategory: category,
       };
-      setTransactions(updatedTransactions); // Mettre à jour l'état transactions
+      setTransactions(updatedTransactions);
       setIsDropDownOpen(false);
     }
   };
@@ -46,7 +46,7 @@ export function Collapse({ transactions: initialTransactions }) {
       ...updatedTransactions[index],
       transactionNote: noteInput,
     };
-    setTransactions(updatedTransactions); // Mettre à jour l'état transactions
+    setTransactions(updatedTransactions);
     setEditingNoteIndex(null);
   };
 

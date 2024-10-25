@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import transactions from "../data/transactions.json";
+import { logout } from "./authSlice";
 
 const accountsSlice = createSlice({
   name: "accounts",
@@ -34,8 +35,14 @@ const accountsSlice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(logout, () => {
+      return [];
+    });
+  },
 });
 
 export const { updateTransactionCategory, updateTransactionNote } =
   accountsSlice.actions;
+
 export default accountsSlice.reducer;
