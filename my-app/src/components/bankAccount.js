@@ -1,11 +1,11 @@
 import { useState } from "react";
-import transactions from "../data/transactions.json";
+import { useSelector } from "react-redux";
 import { Collapse } from "../components/collapse";
 import "../styles/main.css";
 
 export function BankAccount({ setIsUserInfoVisible }) {
-  const accounts = transactions;
   const [activeAccountIndex, setActiveAccountIndex] = useState(null);
+  const accounts = useSelector((state) => state.accounts.accounts);
 
   const handleShowCollapses = (index) => {
     setActiveAccountIndex(index);
@@ -70,6 +70,9 @@ export function BankAccount({ setIsUserInfoVisible }) {
           <div className="collapses-container">
             <Collapse
               transactions={accounts[activeAccountIndex].transactions}
+              accountId={
+                accounts[activeAccountIndex]?.accountDetails?.accountNumber
+              }
             />
           </div>
         </div>

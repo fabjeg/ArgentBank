@@ -1,48 +1,59 @@
 import { createSlice } from "@reduxjs/toolkit";
 import transactions from "../data/transactions.json";
-import { logout } from "./authSlice";
+
+const initialState = {
+  accounts: transactions,
+};
 
 const accountsSlice = createSlice({
   name: "accounts",
-  initialState: transactions,
+  initialState,
   reducers: {
+    resetState: () => initialState,
+    clearAccounts: (state) => {
+      state.accounts = [];
+    },
+
     updateTransactionCategory: (state, action) => {
       const { accountId, transactionId, category } = action.payload;
-      const account = state.find(
-        (acc) => acc.accountDetails.accountNumber === accountId
-      );
-      if (account) {
-        const transaction = account.transactions.find(
-          (trx) => trx.id === transactionId
-        );
-        if (transaction) {
-          transaction.transactionCategory = category;
+      state.accounts = state.accounts.map((account) => {
+        if (account.accountDetails.accountNumber === accountId) {
+          return {
+            ...account,
+            transactions: account.transactions.map((trx) =>
+              trx.id === transactionId
+                ? { ...trx, transactionCategory: category }
+                : trx
+            ),
+          };
         }
-      }
+        return account;
+      });
     },
+
     updateTransactionNote: (state, action) => {
       const { accountId, transactionId, note } = action.payload;
-      const account = state.find(
-        (acc) => acc.accountDetails.accountNumber === accountId
-      );
-      if (account) {
-        const transaction = account.transactions.find(
-          (trx) => trx.id === transactionId
-        );
-        if (transaction) {
-          transaction.transactionNote = note;
+      state.accounts = state.accounts.map((account) => {
+        if (account.accountDetails.accountNumber === accountId) {
+          return {
+            ...account,
+            transactions: account.transactions.map((trx) =>
+              trx.id === transactionId ? { ...trx, transactionNote: note } : trx
+            ),
+          };
         }
-      }
+        return account;
+      });
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(logout, () => {
-      return [];
-    });
   },
 });
 
-export const { updateTransactionCategory, updateTransactionNote } =
-  accountsSlice.actions;
+export const {
+  resetState,
+  updateTransactionCategory,
+  updateTransactionNote,
+  getAllAccounts,
+  clearAccounts,
+} = accountsSlice.actions;
 
 export default accountsSlice.reducer;

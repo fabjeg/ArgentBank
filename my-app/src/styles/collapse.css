@@ -56,6 +56,7 @@
   padding: 10px 0 0 2%;
   color: white;
   font-size: 17px;
+  text-align: left;
 }
 .open-details {
   border-radius: 0 0 6px 6px;
@@ -100,6 +101,7 @@
   display: flex;
   width: 30%;
   text-align: left;
+  width: 30%;
 }
 .fa-solid {
   position: relative;
@@ -110,4 +112,19 @@
 }
 .fa-chevron-down {
   color: white;
+}
+.containerInput {
+  display: flex;
+  height: 100%;
+  width: 30%;
+  margin-top: 4%;
+}
+.buttonSave {
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  font-size: 17px;
+}
+.inputSave {
+  border: none;
 }

@@ -1,18 +1,24 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { DropDownMenu } from "../components/drop-down";
+import {
+  updateTransactionCategory,
+  updateTransactionNote,
+} from "../features/accountSlice";
 import "../styles/collapse.css";
 
-export function Collapse({ transactions: initialTransactions }) {
+export function Collapse({ transactions: initialTransactions, accountId }) {
+  const dispatch = useDispatch();
   const [transactions, setTransactions] = useState(initialTransactions);
   const [openIndex, setOpenIndex] = useState(null);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [noteInput, setNoteInput] = useState("");
-  const [editingNoteIndex, setEditingNoteIndex] = useState(null);
+  const [editingIndex, setEditingIndex] = useState(null);
 
   const toggleCollapse = (index) => {
     setOpenIndex(openIndex === index ? null : index);
     setIsDropDownOpen(false);
-    setEditingNoteIndex(null);
+    setEditingIndex(null);
   };
 
   const handleCategoryClick = () => {
@@ -21,33 +27,39 @@ export function Collapse({ transactions: initialTransactions }) {
 
   const handleCategorySelect = (category) => {
     if (openIndex !== null) {
-      const updatedTransactions = [...transactions];
-      updatedTransactions[openIndex] = {
-        ...updatedTransactions[openIndex],
-        transactionCategory: category,
-      };
+      const transactionId = transactions[openIndex].id;
+      const updatedTransactions = transactions.map((transaction, idx) =>
+        idx === openIndex
+          ? { ...transaction, transactionCategory: category }
+          : transaction
+      );
       setTransactions(updatedTransactions);
+      dispatch(
+        updateTransactionCategory({ accountId, transactionId, category })
+      );
       setIsDropDownOpen(false);
     }
   };
 
-  const handleNoteEditClick = (index) => {
-    setEditingNoteIndex(index);
+  const handleNoteEdit = (index) => {
+    setEditingIndex(index);
     setNoteInput(transactions[index].transactionNote || "");
   };
 
-  const handleNoteChange = (e) => {
-    setNoteInput(e.target.value);
-  };
-
-  const handleNoteSave = (index) => {
-    const updatedTransactions = [...transactions];
-    updatedTransactions[index] = {
-      ...updatedTransactions[index],
-      transactionNote: noteInput,
-    };
-    setTransactions(updatedTransactions);
-    setEditingNoteIndex(null);
+  const handleNoteSave = () => {
+    if (editingIndex !== null) {
+      const transactionId = transactions[editingIndex].id;
+      const updatedTransactions = transactions.map((transaction, idx) =>
+        idx === editingIndex
+          ? { ...transaction, transactionNote: noteInput }
+          : transaction
+      );
+      setTransactions(updatedTransactions);
+      dispatch(
+        updateTransactionNote({ accountId, transactionId, note: noteInput })
+      );
+      setEditingIndex(null);
+    }
   };
 
   return (
@@ -56,7 +68,7 @@ export function Collapse({ transactions: initialTransactions }) {
         <ul className="transaction-list">
           {transactions.map((transaction, index) => (
             <li
-              key={index}
+              key={transaction.id}
               className="transaction-item"
             >
               <div
@@ -73,14 +85,10 @@ export function Collapse({ transactions: initialTransactions }) {
                   className={`fa-solid ${
                     openIndex === index ? "fa-chevron-up" : "fa-chevron-down"
                   }`}
-                ></span>
+                />
               </div>
               {openIndex === index && (
-                <div
-                  className={`transaction-details ${
-                    openIndex === index ? "open-details" : ""
-                  }`}
-                >
+                <div className="transaction-details">
                   <div className="transaction-type">
                     <p>Transaction type</p>
                     <p className="type">{transaction.transactionType}</p>
@@ -100,18 +108,18 @@ export function Collapse({ transactions: initialTransactions }) {
                   </div>
                   <div className="transaction-note">
                     <p>Note</p>
-                    {editingNoteIndex === index ? (
+                    {editingIndex === index ? (
                       <div className="containerNote">
                         <input
                           className="inputNote"
                           type="text"
                           value={noteInput}
-                          onChange={handleNoteChange}
+                          onChange={(e) => setNoteInput(e.target.value)}
                           placeholder="Saisissez une note"
                         />
                         <button
                           className="buttonNote"
-                          onClick={() => handleNoteSave(index)}
+                          onClick={handleNoteSave}
                         >
                           Sauvegarder
                         </button>
@@ -121,7 +129,7 @@ export function Collapse({ transactions: initialTransactions }) {
                         {transaction.transactionNote || "Aucune note"}
                         <span
                           className="fa-solid fa-pencil"
-                          onClick={() => handleNoteEditClick(index)}
+                          onClick={() => handleNoteEdit(index)}
                         />
                       </p>
                     )}

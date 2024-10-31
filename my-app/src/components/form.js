@@ -3,6 +3,7 @@ import { useState } from "react";
 import "../styles/main.css";
 import { login } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
+import { resetState } from "../features/accountSlice";
 
 export function Form() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export function Form() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(login({ username, password })).unwrap();
+    dispatch(resetState());
     navigate("/Account");
   };
 

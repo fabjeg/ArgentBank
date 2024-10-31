@@ -3,7 +3,8 @@ import Logo2 from "../asset/argentBank2.webp";
 import Logo from "../asset/argentBankLogo.webp";
 import "../styles/main.css";
 import { Link, useNavigate } from "react-router-dom";
-import { logout, resetState } from "../features/authSlice";
+import { logout } from "../features/authSlice";
+import { clearAccounts } from "../features/accountSlice";
 
 export function Header() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export function Header() {
 
   const handleSignOut = () => {
     dispatch(logout());
-    dispatch(resetState());
+    dispatch(clearAccounts());
     navigate("/signup");
   };
 

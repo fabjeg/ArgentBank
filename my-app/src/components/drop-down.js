@@ -2,33 +2,38 @@ import { useState, useEffect } from "react";
 import "../styles/drop-down.css";
 import transactions from "../data/transactions.json";
 
-export function DropDownMenu({ onSelectCategory }) {
+export function DropDownMenu({ onSelectCategory, selectedCategory }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const allAccounts = transactions;
-    const allTransactions = allAccounts.flatMap(
-      (account) => account.transactions || []
+    const uniqueCategories = Array.from(
+      new Set(
+        transactions.flatMap(
+          (account) =>
+            account.transactions?.map((t) => t.transactionCategory) || []
+        )
+      )
     );
-    const uniqueCategories = [
-      ...new Set(
-        allTransactions.map((transaction) => transaction.transactionCategory)
-      ),
-    ];
     setCategories(uniqueCategories);
   }, []);
 
   const handleChange = (event) => {
-    const selectedCategory = event.target.value;
-    onSelectCategory(selectedCategory);
+    onSelectCategory(event.target.value);
   };
 
   return (
     <div className="container-category">
       <select
-        className="selecte"
+        className="select"
+        value={selectedCategory || ""}
         onChange={handleChange}
       >
+        <option
+          value=""
+          disabled
+        >
+          Select a category
+        </option>
         {categories.map((category, index) => (
           <option
             key={index}
