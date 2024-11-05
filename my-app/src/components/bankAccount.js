@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Collapse } from "../components/collapse";
-import "../styles/main.css";
+import "../styles/main.min.css";
 
 export function BankAccount({ setIsUserInfoVisible }) {
   const [activeAccountIndex, setActiveAccountIndex] = useState(null);

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import "../styles/main.css";
+import "../styles/main.min.css";
 import { login } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
 import { resetState } from "../features/accountSlice";

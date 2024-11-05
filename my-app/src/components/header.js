@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Logo2 from "../asset/argentBank2.webp";
 import Logo from "../asset/argentBankLogo.webp";
-import "../styles/main.css";
+import "../styles/main.min.css";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../features/authSlice";
 import { clearAccounts } from "../features/accountSlice";

@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { updateUser, getUser } from "../features/userSlice";
-import "../styles/main.css";
+import "../styles/main.min.css";
 
 export function UserInfo() {
   const dispatch = useDispatch();

@@ -5,7 +5,7 @@ import {
   updateTransactionCategory,
   updateTransactionNote,
 } from "../features/accountSlice";
-import "../styles/collapse.css";
+import "../styles/collapse.min.css";
 
 export function Collapse({ transactions: initialTransactions, accountId }) {
   const dispatch = useDispatch();
@@ -121,7 +121,7 @@ export function Collapse({ transactions: initialTransactions, accountId }) {
                           className="buttonNote"
                           onClick={handleNoteSave}
                         >
-                          Sauvegarder
+                          Save
                         </button>
                       </div>
                     ) : (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../styles/drop-down.css";
+import "../styles/drop-down.min.css";
 import transactions from "../data/transactions.json";
 
 export function DropDownMenu({ onSelectCategory, selectedCategory }) {
