@@ -15,7 +15,7 @@ export function Form() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(login({ username, password })).unwrap();
+    await dispatch(login({ username, password }));
     dispatch(resetState());
     navigate("/Account");
   };
