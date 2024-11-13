@@ -12,16 +12,41 @@ export function Form() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
+
+  const validateEmail = (email) => {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return re.test(email);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(login({ username, password }));
-    dispatch(resetState());
-    navigate("/Account");
+
+    if (!validateEmail(username)) {
+      setError("L'adresse e-mail est incorrecte.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Le mot de passe doit contenir au moins 6 caractères.");
+      return;
+    }
+
+    try {
+      const resultAction = await dispatch(login({ username, password }));
+      if (login.fulfilled.match(resultAction)) {
+        dispatch(resetState());
+        navigate("/Account");
+      } else {
+        setError("Échec de la connexion. Vérifiez vos identifiants.");
+      }
+    } catch (err) {
+      setError("Échec de la connexion. Vérifiez vos identifiants.");
+    }
   };
 
   return (
-    <main className="main bg-dark">
+    <main className="bg-dark">
       <section className="sign-in-content">
         <span
           className="fa fa-user-circle sign-in-icon"
@@ -67,6 +92,7 @@ export function Form() {
           >
             Sign In
           </button>
+          {error && <p className="error-message">{error}</p>}
         </form>
       </section>
     </main>

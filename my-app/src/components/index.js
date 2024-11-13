@@ -4,6 +4,6 @@ import { Feature } from "./features";
 import { Footer } from "./footer";
 import { Form } from "./form";
 import { UserInfo } from "./userInfo";
-import { BankAccount } from "./bankAccount";
+import { User } from "./user";
 
-export { Header, Banner, Feature, Footer, Form, UserInfo, BankAccount };
+export { Header, Banner, Feature, Footer, Form, UserInfo, User };

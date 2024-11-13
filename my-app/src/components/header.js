@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import Logo2 from "../asset/argentBank2.webp";
 import Logo from "../asset/argentBankLogo.webp";
 import "../styles/main.min.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,7 +21,7 @@ export function Header() {
     <nav className="main-nav">
       <img
         className="main-nav-logo main-nav-logo-image"
-        src={accessToken ? Logo2 : Logo}
+        src={Logo}
         alt="Argent Bank Logo"
         onClick={() => navigate("/")}
       />
@@ -34,15 +33,15 @@ export function Header() {
               className="user-name"
               onClick={() => navigate("/Account")}
             >
-              <span>{userName}</span>
               <span className="fa-solid fa-circle-user logo"></span>
+              <span>{userName}</span>
             </div>
             <button
               onClick={handleSignOut}
               className="style-button"
             >
-              <span className="fa-solid fa-gear" />
-              <span className="fa-solid fa-power-off" />
+              <span className="fa-solid fa-right-from-bracket" />
+              <span>Sign Out</span>
             </button>
           </div>
         ) : (

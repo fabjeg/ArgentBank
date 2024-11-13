@@ -12,6 +12,10 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+main {
+  display: flex;
+  flex-direction: column;
+}
 
 .main {
   flex: 1;
@@ -19,6 +23,8 @@ body {
 
 .bg-dark {
   background-color: #12002b;
+  padding-bottom: 100px;
+  padding-top: 10px;
 }
 
 .sr-only {
@@ -61,21 +67,27 @@ body {
 }
 .style-button {
   display: flex;
-  gap: 40px;
+  align-items: center;
   border: none;
+  font-weight: bold;
+  color: #2c3e50;
   background-color: white;
+  font-size: 17px;
+  gap: 7px;
+  cursor: pointer;
 }
 .user-name {
   display: flex;
   align-items: center;
-  gap: 15px;
-  color: #42b983;
-  font-size: 20px;
-  margin-right: 15px;
+  gap: 7px;
+  font-weight: bold;
+  color: #2c3e50;
+  text-decoration: none;
+  margin-right: 0.5rem;
+  cursor: pointer;
 }
 .fa-solid {
-  font-size: 30px;
-  color: #00bc77;
+  font-size: px;
 }
 
 .main-nav-logo {
@@ -313,6 +325,7 @@ body {
   font-family: Arial, sans-serif;
   padding: 20px;
   border-radius: 5px;
+  color: white;
 }
 
 .input-form-user {
@@ -334,12 +347,10 @@ body {
 }
 .container-buttons {
   display: flex;
-  justify-content: center;
-  margin-left: 2%;
-  gap: 10px;
+  align-items: center;
 }
 .button-form {
-  background-color: #4caf50;
+  background-color: #00bc77;
   color: white;
   padding: 15px 50px;
   border: none;
