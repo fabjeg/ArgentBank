@@ -3,11 +3,11 @@ import "../styles/main.min.css";
 import { UserInfo } from "./userInfo";
 import { useState, useEffect } from "react";
 import { getUser } from "../features/userSlice";
+import { AccountList } from "../components/accountList"; 
 
 export function User() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const account = useSelector((state) => state.accounts);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -40,26 +40,8 @@ export function User() {
             </button>
           </div>
         )}
-        <h2 className="sr-only">Accounts</h2>
         {showForm && <UserInfo onCancel={handleCancelClick} />}
-        {account.accounts &&
-          account.accounts.map((acc, index) => (
-            <section
-              className="account"
-              key={index}
-            >
-              <div className="account-content-wrapper">
-                <h3 className="account-title">{acc.title}</h3>
-                <p className="account-amount">{acc.money}</p>
-                <p className="account-amount-description">{acc.balanceType}</p>
-              </div>
-              <div className="account-content-wrapper cta">
-                <button className="transaction-button">
-                  View transactions
-                </button>
-              </div>
-            </section>
-          ))}
+        <AccountList />
       </main>
     </div>
   );
